@@ -54,14 +54,6 @@ class TaskScreen extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
-})
-
 const mapStateToProps = ({ tapeTask }) => {
   const { tapeTaskList } = tapeTask
   console.log("fuga",tapeTaskList)

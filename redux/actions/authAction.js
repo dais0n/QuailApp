@@ -4,7 +4,7 @@ import { ENV } from "../../environments";
 
 
 export const login = () => {
-  return (dispatch) => {
+  return async (dispatch) => {
     const result = await Google.logInAsync({
       behavior: 'web',
       iosClientId: ENV.firebaseIosCleintID

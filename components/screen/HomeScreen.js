@@ -1,43 +1,18 @@
 import React, { Component } from "react";
 import {
-    Text,
     Button
 } from "react-native";
+import { connect } from 'react-redux';
 import { Container, Header, Content } from 'native-base'
-
 import Icon from 'react-native-vector-icons/Octicons'
-import { Google } from 'expo';
-import firebase from '../../plugins/firebase'
-import { ENV } from "../../environments";
-
+import { login } from '../../redux/actions';
 
 class HomeScreen extends Component {
-  state = {
-    user: null
-  }
-
   async onLoginButtonPress() {
-    const result = await Google.logInAsync({
-      behavior: 'web',
-      iosClientId: ENV.firebaseIosCleintID
-    });
-
-    if (result.type === "success") {
-      const { idToken, accessToken } = result;
-      const credential = firebase.auth.GoogleAuthProvider.credential(idToken, accessToken);
-      return firebase.auth().signInWithCredential(credential).catch((error) => console.log(error))
+    if (this.props.user == undefined) {
+      login()
     }
-  }
-
-  componentDidMount() {
-    firebase.auth().onAuthStateChanged(user => {
-      this.setState({ user })
-    })
-  }
-
-  login() {
-    const provider = new firebase.auth.GoogleAuthProvider()
-    firebase.auth().signInWithRedirect(provider)
+    console.log(this.props.user)
   }
 
   static navigationOptions = {
@@ -57,4 +32,8 @@ class HomeScreen extends Component {
     );
   }
 }
-export default HomeScreen
+const mapStateToProps = ({ user }) => {
+  return { user };
+};
+
+export default connect(mapStateToProps, { login })(HomeScreen);

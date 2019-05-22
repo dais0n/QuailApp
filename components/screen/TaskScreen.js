@@ -56,7 +56,6 @@ class TaskScreen extends Component {
 
 const mapStateToProps = ({ tapeTask }) => {
   const { tapeTaskList } = tapeTask
-  console.log("fuga",tapeTaskList)
   return { tapeTaskList };
 };
 

@@ -1,17 +1,10 @@
 import React, { Component } from "react";
-import { Text, StyleSheet, } from "react-native";
 import { connect } from 'react-redux';
 import { getAllTapeTask } from '../../redux/actions';
 
-import { Container, Content, Header, List, View } from 'native-base'
+import { Container, Content, Header, List, Spinner } from 'native-base'
 import Icon from 'react-native-vector-icons/Octicons'
 import TapeTaskList from '../TapeTaskList'
-
-const tapeTasksList = [
-  { mark: "close", angle: "100", rank: 4 },
-  { mark: "minus", angle: "90", rank: 5 },
-  { mark: "arrow-up", angle: "90", rank: 3 }
-];
 
 class TaskScreen extends Component {
   static navigationOptions = {
@@ -25,7 +18,7 @@ class TaskScreen extends Component {
   }
 
   render() {
-    const { tapeTaskList } = this.props
+    const { tapeTaskList, uid } = this.props
     if (tapeTaskList != null) {
       return (
         <Container>
@@ -35,7 +28,7 @@ class TaskScreen extends Component {
               {
                 tapeTaskList.tasks.map((task, index) => {
                   return (
-                    <TapeTaskList key={index} task={task} />
+                    <TapeTaskList key={index} task={task} userId={uid} />
                   )
                 })
               }
@@ -46,17 +39,19 @@ class TaskScreen extends Component {
     }
     return (
       <Container>
+        <Header />
         <Content>
-          <Text>loading</Text>
+            <Spinner color='green' />
         </Content>
       </Container>
     )
   }
 }
 
-const mapStateToProps = ({ tapeTask }) => {
+const mapStateToProps = ({ tapeTask, user }) => {
   const { tapeTaskList } = tapeTask
-  return { tapeTaskList };
+  const { uid } = user
+  return { tapeTaskList, uid };
 };
 
 export default connect(mapStateToProps, { getAllTapeTask })(TaskScreen);

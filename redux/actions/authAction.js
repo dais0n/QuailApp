@@ -1,29 +1,59 @@
 import { Google } from 'expo';
 import firebase from '../../plugins/firebase'
 import { ENV } from "../../environments";
-
+import { LOGIN_FAILURE, LOGIN_OK } from './types';
+import { db } from '../../plugins/firebase'
 
 export const login = () => {
   return async (dispatch) => {
-    const result = await Google.logInAsync({
-      behavior: 'web',
-      iosClientId: ENV.firebaseIosCleintID
-    });
-
-    if (result.type === "success") {
-      const { idToken, accessToken } = result;
+    try {
+      const loginResult = await Google.logInAsync({
+        behavior: 'web',
+        iosClientId: ENV.firebaseIosCleintID
+      });
+      // Login to firebase
+      const { idToken, accessToken } = loginResult;
       const credential = firebase.auth.GoogleAuthProvider.credential(idToken, accessToken);
-      firebase.auth().signInWithCredential(credential)
-        .then(user => loginSuccess(dispatch, user))
-        .catch(() => loginFailure(dispatch))
+      const { user } = await firebase.auth().signInWithCredential(credential)
+      // Login to redux
+      loginOK(dispatch, user)
+      return user
+      // TODO: update profile
+    } catch (e) {
+      loginFailure(dispatch)
+      return null
     }
   }
 }
 
-const loginFailure = (dispatch) => {
-  dispatch({ type: LOGIN_USER_FAILURE });
+// check Login and redux Login
+export const refLogin = () => {
+  return async (dispatch) => {
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        loginOK(dispatch, user)
+        return user
+      }
+    });
+    loginFailure(dispatch)
+    return null
+  }
+}
+
+// if user haven't login, register user
+const updateProfile = (user) => {
+  const { uid, displayName, photoURL } = user
+  db.collection('users')
+    .doc(uid)
+    .set({ displayName, photoURL })
+    .catch(console.error);
 };
 
-const loginSuccess = (dispatch, user) => {
-  dispatch({ type: LOGIN_USER_SUCCESS, payload: user });
+const loginFailure = (dispatch) => {
+  dispatch({ type: LOGIN_FAILURE });
 };
+
+const loginOK = (dispatch, user) => {
+  dispatch({ type: LOGIN_OK, payload: user });
+  return user
+}

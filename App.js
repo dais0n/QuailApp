@@ -6,9 +6,9 @@ import { createAppContainer } from 'react-navigation'
 import ReduxThunk from 'redux-thunk';
 import logger from 'redux-logger';
 import reducers from './redux/reducers';
-import AppNavigator from './components/AppNavigator'
+import AuthenticationNavigator from './components/AuthenticationNavigator'
 
-const AppContainer = createAppContainer(AppNavigator);
+const AppContainer = createAppContainer(AuthenticationNavigator);
 
 export default class App extends React.Component {
   render() {

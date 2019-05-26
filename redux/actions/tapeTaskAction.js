@@ -7,13 +7,12 @@ import {
 export const getAllTapeTask = () => {
   return (dispatch) => {
     // TODO: start notification for loading
-    // fetch from firestore
-    db.collection('tapes').get().then((res) => {
+    db.collection('tape').doc('8d35Rqtmy3W932UIHBQe').collection('task').get().then((res) => {
+      const taskList = []
       res.forEach((doc) => {
-        if (doc.id == 'Ior0ohFQlnLUNnUnQ8VW') {
-          fetchTapeTaskSuccess(dispatch, doc.data())
-        }
+        taskList.push(doc.data())
       })
+      fetchTapeTaskSuccess(dispatch, taskList)
     })
   };
 };

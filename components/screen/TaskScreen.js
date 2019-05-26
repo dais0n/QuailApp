@@ -19,19 +19,17 @@ class TaskScreen extends Component {
 
   render() {
     const { tapeTaskList, uid } = this.props
+    const tapeTaskListComponets = []
     if (tapeTaskList != null) {
+      tapeTaskList.forEach((task, index) => {
+        tapeTaskListComponets.push(<TapeTaskList key={index} task={task} userId={uid} />)
+      })
       return (
         <Container>
           <Header />
           <Content>
             <List>
-              {
-                tapeTaskList.tasks.map((task, index) => {
-                  return (
-                    <TapeTaskList key={index} task={task} userId={uid} />
-                  )
-                })
-              }
+              {tapeTaskListComponets}
             </List>
           </Content>
         </Container>
@@ -41,7 +39,7 @@ class TaskScreen extends Component {
       <Container>
         <Header />
         <Content>
-            <Spinner color='green' />
+          <Spinner color='green' />
         </Content>
       </Container>
     )

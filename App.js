@@ -1,6 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { Root } from 'native-base';
 import { createStore, applyMiddleware } from 'redux';
 import { createAppContainer } from 'react-navigation'
 import ReduxThunk from 'redux-thunk';
@@ -15,7 +16,9 @@ export default class App extends React.Component {
     const store = createStore(reducers, {}, applyMiddleware(ReduxThunk, logger));
     return (
       <Provider store={store}>
-        <AppContainer />
+         <Root>
+            <AppContainer />
+         </Root>
       </Provider>
     );
   }

@@ -3,7 +3,7 @@ import {
   LOGIN_FAILURE
 } from '../actions/types';
 
-const initialState = { uid: null, displayName: null, photoURL: null};
+const initialState = { isLoggedIn: false, uid: null, displayName: null, photoURL: null};
 
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -11,12 +11,13 @@ export default (state = initialState, action) => {
       return {
         ...state,
         ...initialState,
+        isLoggedIn: true,
         uid: action.payload.uid,
         displayName: action.payload.displayName,
         photoURL: action.payload.photoURL
       };
     case LOGIN_FAILURE:
-      return state;
+      return {...state, ...initialState, isLoggedIn: false};
     default:
       return state;
   }

@@ -8,16 +8,15 @@ import { login } from '../../redux/actions'
 class LoginScreen extends Component {
 
   componentDidMount() {
-    if (this.props.user) {
+    if (this.props.isLoggedIn) {
       this.props.navigation.navigate('Main');
     }
   }
 
   async onLoginButtonPress() {
     // if user don't login
-    this.props.login().then(user => {
-      this.props.navigation.navigate(user ? 'Main' : 'Login');
-    })
+    this.props.login()
+    this.props.navigation.navigate('Main');
   }
 
   static navigationOptions = {
@@ -45,8 +44,9 @@ class LoginScreen extends Component {
   }
 }
 
-const mapStateToProps = ({ tapeTask, user }) => {
-  return { user };
+const mapStateToProps = ({ user }) => {
+  const { isLoggedIn } = user
+  return { isLoggedIn };
 };
 
 export default connect(mapStateToProps, { login })(LoginScreen);

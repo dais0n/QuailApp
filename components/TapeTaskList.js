@@ -10,12 +10,9 @@ var CANCEL_INDEX = 4;
 class TapeTaskList extends Component {
 
   checkDoneStatus() {
-    const { userId } = this.props
-    //const { users } = this.props.task
+    // const { userId } = this.props
     // if (users != null) {
-    //   if (users.some(user => user.id === userId)) {
-    //     return <Badge success><Text>完</Text></Badge>
-    //   }
+    //   return <Badge success><Text>完</Text></Badge>
     // }
   }
 

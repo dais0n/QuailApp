@@ -3,11 +3,12 @@ import { refLogin } from '../../redux/actions';
 import { Container, Header, Content, Spinner } from 'native-base'
 import { connect } from 'react-redux';
 
+// Login Check
 class LoadingScreen extends React.Component {
   componentDidMount() {
-    this.props.refLogin().then(user =>
+    this.props.refLogin().then((user) => {
       this.props.navigation.navigate(user ? 'Main' : 'Login')
-    )
+    })
   }
 
   render() {
@@ -22,4 +23,10 @@ class LoadingScreen extends React.Component {
   }
 }
 
-export default connect(null, { refLogin })(LoadingScreen);
+const mapStateToProps = ({ user }) => {
+  const { isLoggedIn } = user
+  return { isLoggedIn };
+};
+
+export default connect(mapStateToProps, { refLogin })(LoadingScreen);
+

@@ -29,15 +29,20 @@ export const login = () => {
 // check Login and redux Login
 export const refLogin = () => {
   return async (dispatch) => {
-    firebase.auth().onAuthStateChanged(function (user) {
-      if (user) {
-        loginOK(dispatch, user)
-        return user
-      }
-    });
-    loginFailure(dispatch)
-    return null
+    const user = await getCurrentUser().then((user) => {
+      loginOK(dispatch, user)
+      return user
+    })
+    return user
   }
+}
+
+const getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+    firebase.auth().onAuthStateChanged(user => {
+      resolve(user);
+    }, reject);
+  });
 }
 
 // if user haven't login, register user

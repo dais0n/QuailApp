@@ -14,7 +14,7 @@ class TaskScreen extends Component {
   }
 
   componentWillMount() {
-    this.props.getAllTapeTask();
+    this.props.getAllTapeTask(this.props.uid);
   }
 
   render() {

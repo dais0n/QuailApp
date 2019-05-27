@@ -8,6 +8,9 @@ import ReduxThunk from 'redux-thunk';
 import logger from 'redux-logger';
 import reducers from './redux/reducers';
 import AuthenticationNavigator from './components/AuthenticationNavigator'
+// for debug
+import { YellowBox } from 'react-native';
+YellowBox.ignoreWarnings(['Remote debugger']);
 
 const AppContainer = createAppContainer(AuthenticationNavigator);
 

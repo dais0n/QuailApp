@@ -5,21 +5,21 @@ import {
 } from './types'
 
 export const getAllTapeTask = (uid) => {
-  return (dispatch) => {
-    // TODO: start notification for loading
+  return async (dispatch) => {
     // get all tasks
     db.collection('tape').doc('8d35Rqtmy3W932UIHBQe').collection('task').get().then((res) => {
-      const taskList = []
-      res.forEach((doc) => {
+      res.forEach(async (task) => {
         // get task status
-        // const status = db.collection('tape').doc('8d35Rqtmy3W932UIHBQe').collection('task').doc(doc.id)
-        //   .collection('user').doc(uid)
-        // if (status.exists) {
-        //   console.log(status)
-        // }
-        taskList.push(doc.data())
+        const userRef = db.collection('tape').doc('8d35Rqtmy3W932UIHBQe').collection('task').doc(task.id)
+          .collection('user').doc(uid)
+        // get status
+        const status = await userRef.get()
+        if (status.exists) {
+          fetchTapeTaskSuccess(dispatch, Object.assign(task.data(), status.data()))
+          return
+        }
+        fetchTapeTaskSuccess(dispatch, Object.assign(task.data(), {status: 0}))
       })
-      fetchTapeTaskSuccess(dispatch, taskList)
     })
   };
 };

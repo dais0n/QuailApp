@@ -8,16 +8,14 @@ const initialState = { isLoggedIn: false, uid: null, displayName: null, photoURL
 export default (state = initialState, action) => {
   switch (action.type) {
     case LOGIN_OK:
-      return {
-        ...state,
-        ...initialState,
-        isLoggedIn: true,
+      return Object.assign({}, state, {
+        isLoggedIn: false,
         uid: action.payload.uid,
         displayName: action.payload.displayName,
         photoURL: action.payload.photoURL
-      };
+      })
     case LOGIN_FAILURE:
-      return {...state, ...initialState, isLoggedIn: false};
+      return state;
     default:
       return state;
   }

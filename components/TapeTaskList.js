@@ -10,14 +10,13 @@ var CANCEL_INDEX = 4;
 class TapeTaskList extends Component {
 
   checkDoneStatus() {
-    // const { userId } = this.props
-    // if (users != null) {
-    //   return <Badge success><Text>完</Text></Badge>
-    // }
+    if (users != null) {
+      return <Badge success><Text>完</Text></Badge>
+    }
   }
 
   render() {
-    const { mark, angle, rank } = this.props.task
+    const { mark, angle, rank, status } = this.props.task
     return (
       <ListItem style={{ height: 75 }} onPress={
         () => ActionSheet.show(
@@ -42,7 +41,9 @@ class TapeTaskList extends Component {
           <Text>{rank}級</Text>
         </Body>
         <Right>
-          {this.checkDoneStatus()}
+          {
+            status ? <Badge success><Text>完</Text></Badge> : null
+          }
         </Right>
       </ListItem>
     );

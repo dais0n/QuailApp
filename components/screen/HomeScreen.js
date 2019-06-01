@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Header, Content } from 'native-base'
+import { View, Text } from 'react-native'
 import Icon from 'react-native-vector-icons/Octicons'
 
 class HomeScreen extends Component {
@@ -12,11 +12,9 @@ class HomeScreen extends Component {
 
   render() {
     return (
-      <Container>
-        <Header />
-        <Content>
-        </Content>
-      </Container>
+        <View style={styles.container}>
+          <Text>Logged in....</Text>
+        </View>
     );
   }
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { refLogin } from '../../redux/actions';
-import { Container, Header, Content, Spinner } from 'native-base'
 import { connect } from 'react-redux';
+import { View, Text } from "react-native";
 
 // Login Check
 class LoadingScreen extends React.Component {
@@ -13,12 +13,9 @@ class LoadingScreen extends React.Component {
 
   render() {
     return (
-      <Container>
-        <Header />
-        <Content>
-          <Spinner color='green' />
-        </Content>
-      </Container>
+        <View>
+          <Text>Logged in....</Text>
+        </View>
     )
   }
 }

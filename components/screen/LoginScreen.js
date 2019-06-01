@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import { TouchableOpacity, Image } from "react-native";
+import { View, Text } from "react-native";
 import { connect } from 'react-redux';
-import { View, Container, Header, Content } from 'native-base'
 import Icon from 'react-native-vector-icons/Octicons'
 import { login } from '../../redux/actions'
 
@@ -27,19 +26,9 @@ class LoginScreen extends Component {
 
   render() {
     return (
-      <Container>
-        <Header />
-        <Content>
-            <TouchableOpacity
-              onPress={() => this.onLoginButtonPress()}>
-            <View style={{justifyContent: 'center' , alignItems: 'center'}}>
-              <Image
-                source={require('../../assets/google_signin_button.png')}
-              />
-            </View>
-            </TouchableOpacity>
-        </Content>
-      </Container>
+        <View>
+          <Text>Logged in....</Text>
+        </View>
     );
   }
 }

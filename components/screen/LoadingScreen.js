@@ -1,7 +1,7 @@
 import React from 'react';
 import { refLogin } from '../../redux/actions';
 import { connect } from 'react-redux';
-import { View, Text } from "react-native";
+import { View, Text, ActivityIndicator, StyleSheet } from "react-native";
 
 // Login Check
 class LoadingScreen extends React.Component {
@@ -13,9 +13,10 @@ class LoadingScreen extends React.Component {
 
   render() {
     return (
-        <View>
-          <Text>Logged in....</Text>
-        </View>
+      <View style={styles.container}>
+        <Text>Logged in....</Text>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
     )
   }
 }
@@ -27,3 +28,11 @@ const mapStateToProps = ({ user }) => {
 
 export default connect(mapStateToProps, { refLogin })(LoadingScreen);
 
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  }
+})
